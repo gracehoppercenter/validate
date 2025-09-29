@@ -152,5 +152,12 @@ function renderErrorFooter() {
         `);
 }
 
-// Call the init function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', init);
+// Call the init function when the DOM is fully loaded.
+// If that has already happened before this script ran, 
+// go ahead and fire init() now.
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
