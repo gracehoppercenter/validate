@@ -82,6 +82,10 @@ function addWarningFooter() {
 
 // Helper function to render validation results
 function renderValidationResults(data) {
+    
+    // Filter out messages where type == 'info'
+    data.messages = data.messages.filter(msg => msg.type !== 'info');
+
     // console.log(data);
     let isHTMLValid = data.messages.length === 0;
 
