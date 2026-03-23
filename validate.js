@@ -48,6 +48,7 @@ function validateHTML() {
 
     } else {
         // Hosted file case: Use URL-based validation
+        const loc = window.location.href;
         fetch("https://validator.w3.org/nu/?out=json&doc=" + encodeURIComponent(loc), {
             method: "GET"
         })
