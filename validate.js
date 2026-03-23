@@ -1,13 +1,11 @@
 let createdFooter = false;
 function init() {
     const loc = window.location.href;
-    const isLocalFile = checkLocalFile();
 
-    // Create footer immediately if it doesn't exist, so that it doesn't just pop into existance once validation is complete
     let footer = document.querySelector('footer');
     if (!footer) {
         footer = document.createElement('footer');
-        footer.innerHTML = `<p>Validating...</p>`;
+        footer.innerHTML = `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
         document.body.appendChild(footer);
         createdFooter = true;
     }
@@ -19,7 +17,10 @@ function init() {
         console.warn("Warning: This document does not have a <!DOCTYPE html> declaration.");
         addWarningFooter();
     }
+}
 
+function validateHTML() {
+    const isLocalFile = checkLocalFile();
     if (isLocalFile) {
         // Local file case: Include the DOCTYPE manually if necessary
         // I originally had document.documentElement.outerHTML here.
