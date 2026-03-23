@@ -1,6 +1,6 @@
 (function() {
   var script = document.createElement("script");
-  script.src = "https://cdn.jsdelivr.net/gh/gracehoppercenter/validate@1.0.3/validate.js";
+  script.src = "https://cdn.jsdelivr.net/gh/gracehoppercenter/validate@1.0.4/validate.js";
   script.async = false;
   document.head.appendChild(script);
 })();

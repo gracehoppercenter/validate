@@ -1,14 +1,13 @@
 let createdFooter = false;
 function init() {
-    const loc = window.location.href;
 
     let footer = document.querySelector('footer');
     if (!footer) {
         footer = document.createElement('footer');
-        footer.innerHTML = `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
         document.body.appendChild(footer);
         createdFooter = true;
     }
+    footer.innerHTML += `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
 
     // Check if the document has a valid doctype
     let hasValidDoctype = checkDoctype();
