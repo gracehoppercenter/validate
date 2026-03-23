@@ -1,4 +1,4 @@
-let createdFooter = false;
+let footerWasCreatedByScript = false;
 function init() {
 
     let footer = document.querySelector('footer');
@@ -11,7 +11,7 @@ function init() {
         div = document.createElement('div');
         div.id = "htmlcss";
         footer.appendChild(div);
-        createdFooter = true;
+        footerWasCreatedByScript = true;
     }
     div.innerHTML += `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
 
@@ -155,9 +155,9 @@ function renderFooter(innerHTML) {
         div.id = "htmlcss";
         footer.appendChild(div);
     }
-    if (createdFooter) {
+    if (footerWasCreatedByScript) {
         div.innerHTML = "";
-        createdFooter = false;
+        footerWasCreatedByScript = false;
     }
     div.innerHTML += innerHTML;
 }
