@@ -1,13 +1,18 @@
-let createdFooter = false;
+
 function init() {
 
     let footer = document.querySelector('footer');
     if (!footer) {
         footer = document.createElement('footer');
         document.body.appendChild(footer);
-        createdFooter = true;
     }
-    footer.innerHTML += `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
+    let div = footer.querySelector('#htmlcss');
+    if (!div) {
+        div = document.createElement('div');
+        div.id = "htmlcss";
+        footer.appendChild(div);
+    }
+    div.innerHTML += `<p><button onclick="validateHTML()">Validate HTML/CSS</button></p>`;
 
     // Check if the document has a valid doctype
     let hasValidDoctype = checkDoctype();
@@ -78,7 +83,7 @@ function checkDoctype() {
 
 // Helper function to add a warning to the footer if <!DOCTYPE html> is missing
 function addWarningFooter() {
-    renderFooter(`<div id="doctype-warning"><p><strong>Warning: The document is missing a <!DOCTYPE html> declaration. Validation results may not be accurate.</strong></p></div>`);
+    renderFooter(`<p><strong>Warning: The document is missing a <!DOCTYPE html> declaration. Validation results may not be accurate.</strong></p>`);
 }
 
 // Helper function to render validation results
@@ -90,7 +95,7 @@ function renderValidationResults(data) {
     // console.log(data);
     let isHTMLValid = data.messages.length === 0;
 
-    let ValidatorHTML = `<div id="htmlcss"><p><strong>HTML/CSS`;
+    let ValidatorHTML = `<p><strong>HTML/CSS`;
     if (!isHTMLValid) {
         ValidatorHTML += " NOT";
     }
@@ -143,20 +148,19 @@ function renderFooter(innerHTML) {
         footer = document.createElement('footer');
         document.body.appendChild(footer);
     }
-    if (createdFooter) {
-        footer.innerHTML = "";
-        createdFooter = false;
+    let div = footer.querySelector('#htmlcss');
+    if (!div) {
+        div = document.createElement('div');
+        div.id = "htmlcss";
+        footer.appendChild(div);
     }
-    footer.innerHTML += innerHTML;
+    div.innerHTML = "";
+    div.innerHTML += innerHTML;
 }
 
 // Helper function to render an error message in the footer
 function renderErrorFooter() {
-    renderFooter(`
-        <div id="htmlcss">
-            <p><strong>HTML/CSS validation could not be performed due to an error.</strong></p>
-        </div>
-        `);
+    renderFooter(`<p><strong>HTML/CSS validation could not be performed due to an error.</strong></p>`);
 }
 
 // Call the init function when the DOM is fully loaded.
@@ -167,4 +171,3 @@ if (document.readyState === "loading") {
 } else {
     init();
 }
-
