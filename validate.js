@@ -24,8 +24,8 @@ function init() {
 }
 
 function validateHTML() {
-    const isLocalFile = checkLocalFile();
-    if (isLocalFile) {
+    const localFileType = checkLocalFile();
+    if (localFileType) {
         // Local file case: Include the DOCTYPE manually if necessary
         // I originally had document.documentElement.outerHTML here.
         // That was returning the current DOM state, which has already been
@@ -47,7 +47,9 @@ function validateHTML() {
             })
             .catch(error => {
                 console.warn(error);
-                renderErrorFooter();
+                if (localFileType === "File") {
+                    renderFooter(`<p>Validation does not work on local files. For more information, click <a href="https://github.com/gracehoppercenter/validate/blob/main/local_file.md">here</a>.</p>`)
+                } else renderErrorFooter();
             });
 
     } else {
@@ -68,8 +70,12 @@ function validateHTML() {
 }
 
 function checkLocalFile() {
-    const loc = window.location.href;
-    return loc.startsWith("file://") || loc.startsWith("http://localhost") || loc.startsWith("http://127.0.0.1");
+    const loc = window.location.hostname
+    if (loc.startsWith("file://")) {
+        return "File";
+    } else if (loc.startsWith("localhost") || loc.startsWith("127.0.0.1") || loc.endsWith(".local")) {
+        return "Local Server"
+    } else return false;
 }
 
 // Function to check if the document has a valid <!DOCTYPE html>
@@ -107,7 +113,7 @@ function renderValidationResults(data) {
         </p>
     `;
     if (!isHTMLValid) {
-        if (data['messages'][0]['type'] != 'error') {
+        if (data['messages'][0]['type'] !== 'error') {
             if (checkLocalFile()) {
                 ValidatorHTML += `<p>Validation could not be performed due to an error: ` + data['messages'][0]['message'] + `</p>`;
             } else {
